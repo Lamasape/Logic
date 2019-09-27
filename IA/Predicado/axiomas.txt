@@ -1,0 +1,7 @@
+hombre(marco)
+pompeyano(marco)
+¬pompeyano(X3) v romano(X3)
+gobernante(cesar)
+¬romano(X5) v ¬leal(X5,cesar) v odia(X5,cesar)
+¬hombre(X7) v  ¬gobernante(Y7) v ¬intenta_asesinar(X7,Y7) v leal(X7,Y7)
+intenta_asesinar(marco,cesar)
