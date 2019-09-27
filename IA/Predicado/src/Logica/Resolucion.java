@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Resolucion {
 
-	static String[] axiomas = { "¬q v ¬r v p", "q", "¬r" };
+	static String[] axiomas = { "¬q v ¬r v p", "q", "r"};
 
 	public static void main(String[] args) {
 		result("¬p");
@@ -23,9 +23,7 @@ public class Resolucion {
 				result(axiomaOriginal);
 			} else
 				System.out.println(" Clausula Vacia");
-
 		}
-
 	}
 
 	/**
@@ -79,11 +77,8 @@ public class Resolucion {
 					original = original.replace(axiomaOriginal[j], "");
 					axioma = axioma.replace(axiomaActualizado[i], "");
 					String result = axioma + original;
-					// TODO NO SE COMO QUITAR LA ULTIMA "V"
-					if (result.equals("vv")) {
-						result = "";
 
-					}
+					result = result.substring(0, result.length() - 1);
 					return result;
 
 				}
