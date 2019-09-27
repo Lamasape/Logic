@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Resolucion {
 
-	static String[] listaAxiomas = { "q", "¬q v ¬r v p", "r" };
+	static String[] listaAxiomas = { "¬q v ¬r v p", "r", "q" }; 
 	static boolean[] emparejada;
 
 	public static void main(String[] args) {
@@ -18,12 +18,12 @@ public class Resolucion {
 
 	public static void result(String original) {
 		if (original.equals("")) {
-			System.out.println(" Clausula Vacia");
+			System.out.println("Clausula Vacia");
 		} else {
 			for (int i = 0; i < listaAxiomas.length; i++) {
 				if (emparejada[i]) {
 					emparejada[i] = false;
-					original = comparacionCompleja(original, listaAxiomas[i]);
+					original = comparacionCompleja(original.trim(), listaAxiomas[i]);
 					result(original);
 					emparejada[i] = true;
 				}
@@ -70,7 +70,12 @@ public class Resolucion {
 	public static String comparacionCompleja(String original, String axioma) {
 
 		String[] axiomas = axioma.split("v");
-		String[] axiomaOriginal = original.split("v");
+		String[] axiomaOriginal; 
+		if(original.contains("v")) {
+			axiomaOriginal = original.split("v");
+		}else 
+			axiomaOriginal = original.split(" ");
+		
 		String[] axiomaActualizado = null;
 
 		// original puede ser mas largo o mas pequeño que el axioma
@@ -86,6 +91,7 @@ public class Resolucion {
 					if (!result.equals("")) {
 						result = result.replace("v", "");
 					}
+				
 					return result;
 				}
 
