@@ -6,23 +6,29 @@ import java.util.List;
 
 public class Resolucion {
 
-	static String[] axiomas = { "¬q v ¬r v p", "q", "r"};
+	static String[] listaAxiomas = { "q", "¬q v ¬r v p", "r" };
+	static boolean[] emparejada;
 
 	public static void main(String[] args) {
+		emparejada = new boolean[listaAxiomas.length];
+		for (int i = 0; i < listaAxiomas.length; i++)
+			emparejada[i] = true;
 		result("¬p");
 	}
 
 	public static void result(String original) {
-		String axiomaOriginal = null;
-		for (String ax : axiomas) {
-			axiomaOriginal = comparacionCompleja(original, ax);
-			// eliminamos del axiomaComplejo los axiomas que ya se han utilizado
-			axiomas = eliminarArray(axiomas, ax);
-			// volvemos a iterar
-			if (!axiomaOriginal.equals("")) {
-				result(axiomaOriginal);
-			} else
-				System.out.println(" Clausula Vacia");
+		if (original.equals("")) {
+			System.out.println(" Clausula Vacia");
+		} else {
+			for (int i = 0; i < listaAxiomas.length; i++) {
+				if (emparejada[i]) {
+					emparejada[i] = false;
+					original = comparacionCompleja(original, listaAxiomas[i]);
+					result(original);
+					emparejada[i] = true;
+				}
+
+			}
 		}
 	}
 
@@ -77,14 +83,15 @@ public class Resolucion {
 					original = original.replace(axiomaOriginal[j], "");
 					axioma = axioma.replace(axiomaActualizado[i], "");
 					String result = axioma + original;
-
-					result = result.substring(0, result.length() - 1);
+					if (!result.equals("")) {
+						result = result.replace("v", "");
+					}
 					return result;
-
 				}
+
 			}
 		}
-		return axioma;
+		return original;
 	}
 
 	/**
@@ -98,6 +105,25 @@ public class Resolucion {
 
 		List<String> list = new ArrayList<>(Arrays.asList(array));
 		list.remove(index);
+
+		// Creates a new array with the same size as the list and copies the list
+		// elements to it.
+		array = list.toArray(new String[list.size()]);
+
+		return array;
+	}
+
+	/**
+	 * Añadir axiomass de la lista de axiomas
+	 * 
+	 * @param array
+	 * @param index
+	 * @return
+	 */
+	public static String[] añadirrArray(String[] array, String index) {
+
+		List<String> list = new ArrayList<>(Arrays.asList(array));
+		list.add(index);
 
 		// Creates a new array with the same size as the list and copies the list
 		// elements to it.
